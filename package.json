@@ -1,0 +1,19 @@
+{
+  "name": "make-change",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:WiNloSt/make-change.git",
+  "author": "Mahatthana Nomsawadi <mahatthana.n@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "jest": "^27.2.1",
+    "prettier": "^2.4.1"
+  },
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "jest": {
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.m?[jt]sx?$"
+  }
+}
