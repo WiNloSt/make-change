@@ -34,10 +34,6 @@ module.exports = function makeChange(x, coinSet, solutionCache = {}) {
   }
 
   const candidateCoinSet = coinSet.filter((coin) => coin <= x)
-  if (candidateCoinSet.length <= 0) {
-    return NO_SOLUTION
-  }
-
   for (let coin of candidateCoinSet.reverse()) {
     const nextX = x - coin
 
