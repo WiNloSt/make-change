@@ -25,9 +25,10 @@ const NO_SOLUTION = null
  *
  * @param {number} x
  * @param {number[]} coinSet
- * @returns {Solution | null} empty object indicate no possible solutions
+ * @param {{[x: number]: Solution} | {}} solutionCache to avoid computing the same solution more than once
+ * @returns {Solution | null} null indicate no possible solutions
  */
-module.exports = function makeChange(x, coinSet) {
+module.exports = function makeChange(x, coinSet, solutionCache = {}) {
   if (x === 0) {
     return {}
   }
@@ -40,8 +41,12 @@ module.exports = function makeChange(x, coinSet) {
   for (let coin of candidateCoinSet.reverse()) {
     const nextX = x - coin
 
-    const subSolution = makeChange(nextX, coinSet)
-    console.log("subSolution,x", subSolution, nextX)
+    if (!solutionCache[x]) {
+      solutionCache[x] = makeChange(nextX, candidateCoinSet, solutionCache)
+    }
+
+    const subSolution = solutionCache[x]
+
     if (subSolution) {
       return combineSolution(subSolution, coin)
     }
