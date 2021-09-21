@@ -16,11 +16,49 @@ D. x = 6, coinset = [5,7]
 */
 
 /**
+ * @typedef {{[key: number]: number}} Solution
+ */
+
+const NO_SOLUTION = null
+
+/**
  *
  * @param {number} x
  * @param {number[]} coinSet
- * @returns {object}
+ * @returns {Solution | null} empty object indicate no possible solutions
  */
 module.exports = function makeChange(x, coinSet) {
-  return { 1: 6 }
+  if (x === 0) {
+    return {}
+  }
+
+  const candidateCoinSet = coinSet.filter((coin) => coin <= x)
+  if (candidateCoinSet.length <= 0) {
+    return NO_SOLUTION
+  }
+
+  for (let coin of candidateCoinSet.reverse()) {
+    const nextX = x - coin
+
+    const subSolution = makeChange(nextX, coinSet)
+    console.log("subSolution,x", subSolution, nextX)
+    if (subSolution) {
+      return combineSolution(subSolution, coin)
+    }
+  }
+
+  return NO_SOLUTION
+}
+
+/**
+ *
+ * @param {Solution} solution
+ * @param {number} coin
+ * @returns {Solution} empty object indicate no possible solutions
+ */
+function combineSolution(solution, coin) {
+  return {
+    ...solution,
+    [coin]: solution[coin] ? solution[coin] + 1 : 1,
+  }
 }
